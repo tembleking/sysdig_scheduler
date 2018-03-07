@@ -1,8 +1,11 @@
 FROM alpine
 MAINTAINER "Federico Barcelona"
+ADD . /root/go/src/github.com/tembleking/sysdig_scheduler
 RUN apk --no-cache add go g++ git && \
-    go get -t -v github.com/tembleking/sysdig_scheduler && \
-    go build github.com/tembleking/sysdig_scheduler && \ 
+    cd /root/go/src/github.com/tembleking/sysdig_scheduler && \
+    go get -v && \ 
+    mv /root/go/bin/sysdig_scheduler / && \
+    cd / && \
     rm -rf /root/go && \
     apk del go g++ git
 CMD /sysdig_scheduler
